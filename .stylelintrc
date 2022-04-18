@@ -1,0 +1,23 @@
+{
+  "extends": "stylelint-config-standard",
+  "plugins": ["stylelint-declaration-strict-value"],
+  "rules": {
+    "indentation": [2, { "ignore": ["value"] }],
+    "no-eol-whitespace": null,
+    "no-missing-end-of-source-newline": null,
+    "rule-empty-line-before": null,
+    "declaration-empty-line-before": null,
+    "color-hex-case": null,
+    "value-keyword-case": null,
+    "max-nesting-depth": 5,
+    "length-zero-no-unit": true,
+    "at-rule-no-unknown": null,
+    "property-no-unknown": true,
+    "no-descending-specificity": null,
+    "no-duplicate-selectors": null,
+    "scale-unlimited/declaration-strict-value": [
+      ["/color$/", "z-index", "font-size", "font-weight"],
+      { "ignoreValues": ["transparent", "inherit", "unset"] }
+    ]
+  }
+}

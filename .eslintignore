@@ -1,0 +1,4 @@
+node_modules/
+*.js
+*.generated.ts
+*.scss.d.ts
