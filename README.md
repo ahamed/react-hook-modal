@@ -1,46 +1,88 @@
-# Getting Started with Create React App
+# React Hook Modal
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Motivation
+The basic idea is to open a modal dynamically. For example you can open a modal inside any conditional, on a button click or many more.
+This package is created only for using the modal functionalities and leave the modal content component to the user. 
+This package is allowing the developers to create their own modal content component and also allowing them to provide extensive
+data passing on closing the modal.
 
-## Available Scripts
 
-In the project directory, you can run:
+## Features
+- Hook based implementation
+- Easy to use
+- Only `showModal` and `closeModal` functions are enough.
+- Ability to send custom data after closing the modal.
+- Multiple actions on close are available.
+- Could be used as a confirm popover.
 
-### `npm start`
+## Installation
+```
+npm install @ahamed07/react-hook-modal
+```
+or
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+```
+yarn add @ahamed07/react-hook-modal
+```
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+## Usage
+```tsx
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import { ModalProvider, useModal } from '@ahamed07/react-hook-modal';
 
-### `npm test`
+const ModalContent = ({title, content}) => {
+	const { closeModal } = useModal();
+	return (
+    <div>
+      <h1>{title}</h1>
+      <div>{content}</div>
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+      <button
+        type="button"
+        onClick={() => closeModal({
+          action: 'CLOSE', data: {name: 'john doe', age: 32}
+        })}
+      >
+        Close Modal
+      </button>
+    </div>
+	)
+}
 
-### `npm run build`
+const  App = () => {
+  const { showModal } = useModal();
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+  return (
+    <div>
+      <h1> React Hook Modal Example </h1>
+      <button
+        type="button"
+        onClick={async () => {
+          const { action } = await showModal({
+            component: ModalContent,
+            props: {
+              title: 'This is a simple modal title',
+              content: 'Lorem ipsum dolor...'
+            }
+          });
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+          if (action === 'CLOSE') {
+            // Do some stuff here
+          }
+        }}
+      >
+        Open Modal
+      </button>
+    </div>
+  );
+}
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(
+  <ModalProvider>
+    <App />
+  </ModalProvider>
+)
 
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+```

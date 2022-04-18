@@ -1,8 +1,28 @@
 {
-  "name": "react-hook-modal",
-  "version": "0.1.0",
-  "private": true,
+  "name": "@ahamed07/react-hook-modal",
+  "version": "0.0.9",
+  "description": "A simple hook based modal plugin.",
+  "private": false,
+  "module": "./lib/esm/index.js",
+  "main": "./lib/cjs/index.js",
+  "types": "./lib/esm/types.d.ts",
+  "files": [
+    "lib/"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ahamed/react-hook-modal"
+  },
+  "license": "MIT",
+  "keywords": [
+    "react",
+    "modal",
+    "hook",
+    "typescript",
+    "react-hooks"
+  ],
   "dependencies": {
+    "@emotion/react": "^11.9.0",
     "@testing-library/jest-dom": "^5.16.4",
     "@testing-library/react": "^13.1.1",
     "@testing-library/user-event": "^13.5.0",
@@ -12,7 +32,7 @@
     "@types/react-dom": "^18.0.1",
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
-    "react-scripts": "5.0.1",
+    "react-scripts": "^5.0.1",
     "typescript": "^4.6.3",
     "web-vitals": "^2.1.4"
   },
@@ -20,7 +40,13 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "clean": "rimraf lib",
+    "copy-files": "copyfiles -e **/*.ts -e **/*.tsx -u 1 lib/esm/src",
+    "tsc": "npm run clean && tsc --p tsconfig.json && tsc --p tsconfig-cjs.json",
+    "build:esm": "tsc",
+    "build:cjs": "tsc --module commonjs --outDir lib/cjs",
+    "prepare": "npm run clean && npm run build:esm && npm run build:cjs"
   },
   "eslintConfig": {
     "extends": [
@@ -39,5 +65,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "copyfiles": "^2.4.1"
   }
 }
